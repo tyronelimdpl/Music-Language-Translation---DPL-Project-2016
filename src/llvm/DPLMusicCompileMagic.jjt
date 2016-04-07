@@ -1,0 +1,114 @@
+/**
+ * Name: Tyrone Lim
+ * ID: 0702477
+ * Tutor: Dr. Sean Thorpe
+ *************************
+ */options{  static = false;}PARSER_BEGIN(DPLMusicCompileMagic)package llvm;
+import audioSynthesis.OpenFile;
+import java.util.Scanner;
+import java.io.Reader;
+import java.io.StringReader;
+
+public class DPLMusicCompileMagic{
+   public static void main(String args []) throws ParseException
+  {
+    System.out.println("Reading from standard input 0 or 1(exit)...\n");
+    Scanner userinput = new Scanner(System.in); 
+	int choice = userinput.nextInt();  
+    if (true)
+    {
+        switch (choice)
+        {
+          case 0 : 
+          	System.out.println("Reading File....");
+          	Reader reader = new StringReader(OpenFile.readFile("/home/parallels/Eclipse IDE Java/Workspace/Music Language Translation/Media/songs/My God is awesome.txt"));
+		try		{
+		  	DPLMusicCompileMagic parse = new DPLMusicCompileMagic(reader);
+			
+		 	SimpleCharStream stream = new SimpleCharStream(reader);
+			Token temp_token = null;
+			DPLMusicCompileMagicTokenManager TkMgr = new DPLMusicCompileMagicTokenManager(stream);
+			int count = 0;
+    		do {
+        		temp_token = TkMgr.getNextToken();
+				switch(temp_token.kind) {
+						case VERSE:		count++;
+										System.out.println("\nVERSE "+count+" :    " + temp_token.image);
+           				break;
+         				case CHORUS:    System.out.println("\nCHORUS :    " + temp_token.image);
+           				break;
+         				case BRIDGE:    System.out.println("\nBRIDGE :    " + temp_token.image);
+           				break;
+         				default:
+           					if ( temp_token.kind != EOF )
+            					 System.out.println("\nOTHER: " + temp_token.image);
+           				break;
+        		}
+    		} while (temp_token.kind != EOF);
+    		
+  		}finally{
+  		  //System.out.println("Reached the end of the file.");
+   	  	}		}
+	}	
+}/**end of main**/}/**end of class**/
+PARSER_END(DPLMusicCompileMagic)
+
+
+TOKEN : { < #DIGIT : ["0"-"9"] > }
+TOKEN : { < #LETTER : ["a"-"z","A"-"Z"] > }
+TOKEN : { < OPEN_PAR : "(" > }
+TOKEN : { < CLOSE_PAR : ")" > }
+TOKEN:	{ < TAB: "\t" > }
+TOKEN:	{ < #SINGLE_QOUTE: "\'" > }
+TOKEN:	{ < DOUBLE_QOUTE: "\"" > }
+TOKEN:	{ < #DOUBLE_QOUTED_WORDS: "\""(~["\""])+"\"" > }
+TOKEN : { < #EXCLAMATION : "!" > }
+TOKEN : { < #SPACE : " " > }
+TOKEN : { < #BREAK : "," > }
+TOKEN : { < #PAUSE : "." > }
+TOKEN : { < NEWLINE : "\n" | "\r" > }
+TOKEN : { < #WORD : (<SPACE>)*(<LETTER>)+(<SPACE>)*
+					| (<SPACE>)*(<LETTER>)+(<SINGLE_QOUTE>)(<LETTER>)+(<SPACE>)*
+					| (<SPACE>)*(<LETTER>)+(<EXCLAMATION>)*(<SPACE>)*
+					| (<SPACE>)*(<SINGLE_QOUTE>)(<LETTER>)+(<SPACE>)* > }
+TOKEN : { < SENTENCE : (<WORD>)+(<WORD>)*(<BREAK>)*(<PAUSE>)* >}
+TOKEN : { < #VERSE_START : (<NEWLINE>)*(<TAB>)(<SENTENCE>)+(<SENTENCE>)*(<NEWLINE>)+ >}
+TOKEN : { < #VERSE_LINES : ((<SENTENCE>)+(<NEWLINE>)*(<SENTENCE>)*(<PAUSE>)*)+ >}
+TOKEN : { < VERSE : (<VERSE_START>)(<VERSE_LINES>)+ >}
+TOKEN : { < BRIDGE : (<NEWLINE>)*(<DOUBLE_QOUTED_WORDS>)+ > }
+TOKEN : { < CHORUS : <OPEN_PAR>
+					((<WORD>)*(<BREAK>)*(<SPACE>)*)*
+					((<WORD>)+((<SPACE>)*(<WORD>)*)*)+
+					((<WORD>)*(<BREAK>)*(<NEWLINE>)*(<WORD>)+((<WORD>)*(<BREAK>)*(<SPACE>)*)*)*
+					<CLOSE_PAR> > }
+
+void SongConstructs() #Song_Constructs :
+{}
+{
+	(Verse())+ 
+	|
+	(Chorus())+
+	|
+	(	  (Bridge())+	|
+		< EOF >
+	)?
+}
+
+void Verse() #VERSE :
+{}
+{
+ < TAB > (< SENTENCE >)+ (< NEWLINE >)*
+ 
+}
+
+void Chorus() #CHORUS :
+{}
+{
+	< OPEN_PAR > (< SENTENCE >)+(< NEWLINE >)* <CLOSE_PAR>		
+}
+
+void Bridge() #BRIDGE :
+{}
+{
+	< DOUBLE_QOUTE > (< SENTENCE >)+ (< NEWLINE >)* <DOUBLE_QOUTE >
+}

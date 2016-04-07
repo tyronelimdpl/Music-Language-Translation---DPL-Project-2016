@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="API Packages"/>
+	<classpathentry kind="src" path="Media"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="API Packages/jar/translateAPI/jl1.0.1.jar"/>
+	<classpathentry kind="lib" path="API Packages/jar/translateAPI/resty-0.3.2.jar"/>
+	<classpathentry kind="lib" path="API Packages/jar/SpeechAPI/cmu_time_awb.jar"/>
+	<classpathentry kind="lib" path="API Packages/jar/SpeechAPI/cmu_us_kal.jar"/>
+	<classpathentry kind="lib" path="API Packages/jar/SpeechAPI/cmudict04.jar"/>
+	<classpathentry kind="lib" path="API Packages/jar/SpeechAPI/cmulex.jar"/>
+	<classpathentry kind="lib" path="API Packages/jar/SpeechAPI/cmutimelex.jar"/>
+	<classpathentry kind="lib" path="API Packages/jar/SpeechAPI/en_us.jar"/>
+	<classpathentry kind="lib" path="API Packages/jar/SpeechAPI/freetts-jsapi10.jar"/>
+	<classpathentry kind="lib" path="API Packages/jar/SpeechAPI/freetts.jar"/>
+	<classpathentry kind="lib" path="API Packages/jar/googleAPI/gtranslateapi-1.0.jar"/>
+	<classpathentry kind="lib" path="API Packages/jar/googleAPI/jl1.0.jar"/>
+	<classpathentry kind="lib" path="API Packages/jar/beatsAPI/jfugue-5.0.5.jar"/>
+	<classpathentry kind="lib" path="API Packages/jar/SpeechAPI/mbrola.jar"/>
+	<classpathentry kind="lib" path="API Packages/jar/beatsAPI/jfugue-4.0.3-with-musicxml.jar"/>
+	<classpathentry kind="lib" path="API Packages/jar/beatsAPI/jfugue-5.0.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
